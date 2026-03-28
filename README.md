@@ -35,12 +35,6 @@ Copy `.env.example` → `.env` and add your own key.
 
 If you prefer not to activate the venv, run the same command with the full interpreter path, for example: `.venv/bin/python3 codebrief.py /path/to/some/project`.
 
-**Common options**
-
-- **`--detail`** — longer, more module-level / architecture-style detail.
-- **`--save`** or **`--save my-brief.md`** — write the brief to a markdown file (default name: `codebrief.md`).
-- **`--model gpt-4o`** — pick a different model (or set `OPENAI_MODEL` in `.env`).
-
 ## How it works (short)
 
 - **Local path** — uses that folder.
