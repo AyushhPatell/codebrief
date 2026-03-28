@@ -21,47 +21,31 @@ Cloners of your repo get no key from you — they copy `.env.example` → `.env`
 
 ## Quick start
 
-```bash
 cd codebrief
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
+
 # Edit `.env`: set OPENAI_API_KEY to your key (this file stays on your machine only)
-```
 
 Run it:
 
-```bash
 python codebrief.py /path/to/some/project
 python codebrief.py https://github.com/owner/repo
-```
+
 
 - **`--detail`** — longer answer with more module-level / architecture detail.
-- **`--save`** or **`--save my-brief.md`** — write the result to a markdown file (default filename: `codebrief.md`).
-- **`--model gpt-4o`** — override the model (or set `OPENAI_MODEL` in `.env`; default is `gpt-4o-mini`).
-
-Progress lines (clone, scan, API) go to **stderr**; the brief itself prints to **stdout** so you can pipe it (`python codebrief.py ./app > brief.md`).
 
 ## How it works (short)
 
-1. **Local path** — uses that folder. **GitHub URL** — shallow clone into a temp directory, then deletes it when finished.
-2. Builds a **directory tree** (skips heavy folders like `node_modules`, respects a simple reading of `.gitignore`).
-3. Pulls in **README**, common manifests (`package.json`, `pyproject.toml`, …), likely **entry-point** filenames, and a few files under `src/` / `lib/` / `app/` when present. Large files are truncated.
-4. Sends that context to the **OpenAI API** and prints the markdown-style brief.
-
-If the repo is private, cloning will fail unless your machine already has credentials configured for Git; this tool does not ask for a GitHub token.
+1. **Local path** — uses that folder. 
+2. **GitHub URL** — shallow clone into a temp directory, then deletes it when finished.
 
 ## Project layout
 
-| File | Role |
-|------|------|
-| `codebrief.py` | CLI and all logic |
-| `requirements.txt` | Dependencies |
-| `.env.example` | Safe template (commit this) |
-| `.env` | Your real key (gitignored — do not commit) |
-| `.gitignore` | Excludes `.env`, venv, caches |
-
-## License
-
-Use and modify freely for your own projects.
+1. codebrief.py - All logic.
+2. requirements.txt - Dependencies.
+3. .env.example - Safe template (commit this).
+4. .env - Your real key (gitignored — do not commit).
+5. .gitignore - Excludes .env, venv, caches.
