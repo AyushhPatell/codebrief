@@ -17,35 +17,39 @@ Your key is **only** read from a local `.env` file (or from the `OPENAI_API_KEY`
 - To double-check that Git ignores it: `git check-ignore -v .env` (should print a rule from `.gitignore`).
 - Do not put keys in README, issues, or screenshots. If a key ever leaks, revoke it in the [OpenAI API keys](https://platform.openai.com/api-keys) page and create a new one.
 
-Cloners of your repo get no key from you — they copy `.env.example` → `.env` and add their own key.
+Copy `.env.example` → `.env` and add your own key.
 
 ## Quick start
 
-cd codebrief
-python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env
+- Go to the project folder: `cd codebrief` (or `cd` to wherever you cloned it).
+- Create a virtual environment: `python3 -m venv .venv`
+- Activate it: `source .venv/bin/activate` — on Windows: `.venv\Scripts\activate`
+- Install dependencies: `pip install -r requirements.txt`
+- Copy the env template: `cp .env.example .env`
+- Edit `.env` and set `OPENAI_API_KEY` to your key (that file stays on your machine only; do not commit it).
 
-# Edit `.env`: set OPENAI_API_KEY to your key (this file stays on your machine only)
+**Run it** (with the venv still activated, so `python3` uses `.venv`):
 
-Run it:
+- Summarize a local folder: `python3 codebrief.py /path/to/some/project`
+- Summarize a public GitHub repo: `python3 codebrief.py https://github.com/owner/repo`
 
-python codebrief.py /path/to/some/project
-python codebrief.py https://github.com/owner/repo
+If you prefer not to activate the venv, run the same command with the full interpreter path, for example: `.venv/bin/python3 codebrief.py /path/to/some/project`.
 
+**Common options**
 
-- **`--detail`** — longer answer with more module-level / architecture detail.
+- **`--detail`** — longer, more module-level / architecture-style detail.
+- **`--save`** or **`--save my-brief.md`** — write the brief to a markdown file (default name: `codebrief.md`).
+- **`--model gpt-4o`** — pick a different model (or set `OPENAI_MODEL` in `.env`).
 
 ## How it works (short)
 
-1. **Local path** — uses that folder. 
-2. **GitHub URL** — shallow clone into a temp directory, then deletes it when finished.
+- **Local path** — uses that folder.
+- **GitHub URL** — shallow clone into a temp directory, then deletes it when finished.
 
 ## Project layout
 
-1. codebrief.py - All logic.
-2. requirements.txt - Dependencies.
-3. .env.example - Safe template (commit this).
-4. .env - Your real key (gitignored — do not commit).
-5. .gitignore - Excludes .env, venv, caches.
+- **`codebrief.py`** — CLI and logic.
+- **`requirements.txt`** — Dependencies.
+- **`.env.example`** — Safe template (commit this).
+- **`.env`** — Your real key (gitignored — do not commit).
+- **`.gitignore`** — Excludes `.env`, venv, caches.
