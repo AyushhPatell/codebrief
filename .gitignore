@@ -1,0 +1,11 @@
+# Dependencies & caches
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets — never commit (real OpenAI key lives only here, locally)
+.env
+.env.local
+
+# Optional local output from --save
+codebrief.md
